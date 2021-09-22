@@ -4,11 +4,13 @@ import com.sparta.navershop.models.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class NaverShopSearch {
     public String search(String query) {
         RestTemplate rest = new RestTemplate();
@@ -46,5 +48,11 @@ public class NaverShopSearch {
             itemDtoList.add(itemDto);
         }
         return itemDtoList;
+    }
+
+    public static void main(String[] args) {
+        NaverShopSearch naverShopSearch = new NaverShopSearch();
+        String ret = naverShopSearch.search("아이맥");
+        naverShopSearch.fromJSONtoItems(ret);
     }
 }
