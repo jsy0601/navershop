@@ -102,18 +102,17 @@ function addProduct(itemDto) {
      * 2. data: JSON.stringify(itemDto),
      */
     // 1. POST /api/products 에 관심 상품 생성 요청
-    // 2. 응답 함수에서 modal을 뜨게 하고, targetId 를 reponse.id 로 설정 (숙제로 myprice 설정하기 위함)
-}
-
-function showProduct() {
-    /**
-     * 관심상품 목록: #product-container
-     * 검색결과 목록: #search-result-box
-     * 관심상품 HTML 만드는 함수: addProductItem
-     */
-    // 1. GET /api/products 요청
-    // 2. 관심상품 목록, 검색결과 목록 비우기
-    // 3. for 문마다 관심 상품 HTML 만들어서 관심상품 목록에 붙이기!
+    $.ajax({
+        type: "POST",
+        url: '/api/products',
+        contentType: "application/json",
+        data: JSON.stringify(itemDto),
+        success: function (response) {
+            // 2. 응답 함수에서 modal을 뜨게 하고, targetId 를 reponse.id 로 설정 (숙제로 myprice 설정하기 위함)
+            $('#container').addClass('active');
+            targetId = response.id;
+        }
+    })
 }
 
 function addProductItem(product) {
