@@ -1,8 +1,10 @@
 package com.sparta.navershop.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 
+@NoArgsConstructor // 기본 생성자를 자동으로 만듭니다.
 @Getter
 public class ItemDto {
     private String title;

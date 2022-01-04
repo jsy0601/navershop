@@ -40,8 +40,7 @@ public class Product extends Timestamped{
         this.myprice = 0;
     }
 
-    // 관심 가격 변경 시 이용합니다.
-    public void update(ProductMypriceRequestDto requestDto) {
-        this.myprice = requestDto.getMyprice();
+    public void updateMyPrice(int myPrice) {
+        this.myprice = myPrice;
     }
 }

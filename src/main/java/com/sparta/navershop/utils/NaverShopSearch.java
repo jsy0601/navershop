@@ -10,20 +10,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component // 스프링 IoC 에 빈으로 등록
 public class NaverShopSearch {
     public String search(String query) {
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Naver-Client-Id", "9dJjpuKBFhaZNYrqu3PP");
-        headers.add("X-Naver-Client-Secret", "mndLlzJ9Cp");
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\n");
-                sb.append("  \"username\": \"test\",\n");
-                        sb.append("  \"contents\": \"i\"\n");
-                                sb.append("}");
-        String body = sb.toString();
+        headers.add("X-Naver-Client-Id", "zdqMoIkFaK8uKvC2oNY2");
+        headers.add("X-Naver-Client-Secret", "LiZfsgtuD5");
+        String body = "";
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
         ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=" + query, HttpMethod.GET, requestEntity, String.class);
@@ -38,21 +32,13 @@ public class NaverShopSearch {
 
     public List<ItemDto> fromJSONtoItems(String result) {
         JSONObject rjson = new JSONObject(result);
-        JSONArray items = rjson.getJSONArray("items");
-
-        List<ItemDto> itemDtoList = new ArrayList<>();
-
+        JSONArray items  = rjson.getJSONArray("items");
+        List<ItemDto> ret = new ArrayList<>();
         for (int i=0; i<items.length(); i++) {
             JSONObject itemJson = (JSONObject) items.get(i);
             ItemDto itemDto = new ItemDto(itemJson);
-            itemDtoList.add(itemDto);
+            ret.add(itemDto);
         }
-        return itemDtoList;
-    }
-
-    public static void main(String[] args) {
-        NaverShopSearch naverShopSearch = new NaverShopSearch();
-        String ret = naverShopSearch.search("아이맥");
-        naverShopSearch.fromJSONtoItems(ret);
+        return ret;
     }
 }
