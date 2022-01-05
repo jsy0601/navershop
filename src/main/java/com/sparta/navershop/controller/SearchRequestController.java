@@ -1,6 +1,6 @@
 package com.sparta.navershop.controller;
 
-import com.sparta.navershop.models.ItemDto;
+import com.sparta.navershop.dto.ItemDto;
 import com.sparta.navershop.utils.NaverShopSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

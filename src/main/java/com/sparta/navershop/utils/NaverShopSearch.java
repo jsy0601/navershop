@@ -1,6 +1,6 @@
 package com.sparta.navershop.utils;
 
-import com.sparta.navershop.models.ItemDto;
+import com.sparta.navershop.dto.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;

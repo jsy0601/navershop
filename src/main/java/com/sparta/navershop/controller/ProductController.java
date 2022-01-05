@@ -1,10 +1,12 @@
 package com.sparta.navershop.controller;
 
 import com.sparta.navershop.models.Product;
-import com.sparta.navershop.models.ProductMypriceRequestDto;
-import com.sparta.navershop.models.ProductRequestDto;
+import com.sparta.navershop.dto.ProductMypriceRequestDto;
+import com.sparta.navershop.dto.ProductRequestDto;
+import com.sparta.navershop.security.UserDetailsImpl;
 import com.sparta.navershop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +17,26 @@ public class ProductController {
     // 멤버 변수 선언
     private final ProductService productService;
 
-    // 등록된 전체 상품 목록 조회
+    // 로그인한 회원이 등록한 상품들 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts() {
-        List<Product> products = productService.getProducts();
-        // 응답 보내기
-        return products;
+    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUser().getId();
+        return productService.getProducts(userId);
+    }
+
+    // (관리자용) 등록된 모든 상품 목록 조회
+    @GetMapping("/api/admin/products")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
     // 신규 상품 등록
     @PostMapping("/api/products")
-    public Product createProduct(@RequestBody ProductRequestDto requestDto)  {
-        Product product = productService.createProduct(requestDto);
+    public Product createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        // 로그인 되어 있는 ID
+        Long userId = userDetails.getUser().getId();
+
+        Product product = productService.createProduct(requestDto, userId);
         // 응답 보내기
         return product;
     }
