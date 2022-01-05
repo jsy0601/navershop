@@ -42,4 +42,10 @@ public class UserController {
         userService.registerUser(requestDto);
         return "redirect:/";
     }
+
+    // forbidden 페이지
+    @GetMapping("/user/forbidden")
+    public String forbidden() {
+        return "forbidden";
+    }
 }
