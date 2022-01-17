@@ -3,6 +3,7 @@ package com.sparta.navershop.controller;
 import com.sparta.navershop.models.Product;
 import com.sparta.navershop.dto.ProductMypriceRequestDto;
 import com.sparta.navershop.dto.ProductRequestDto;
+import com.sparta.navershop.models.User;
 import com.sparta.navershop.security.UserDetailsImpl;
 import com.sparta.navershop.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +68,16 @@ public class ProductController {
             @RequestParam("isAsc") boolean isAsc
     ) {
         return productService.getAllProducts(page , size, sortBy, isAsc);
+    }
+
+    // 상품에 폴더 추가
+    @PostMapping("/api/products/{id}/folder")
+    public Long addFolder(@PathVariable Long id,
+                          @RequestParam("folderId") Long folderId,
+                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        Product product = productService.addFolder(id, folderId, user);
+        // 응답 보내기
+        return product.getId();
     }
 }

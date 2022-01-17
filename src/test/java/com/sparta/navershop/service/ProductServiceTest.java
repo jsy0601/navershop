@@ -2,6 +2,7 @@ package com.sparta.navershop.service;
 
 import com.sparta.navershop.dto.ProductMypriceRequestDto;
 import com.sparta.navershop.dto.ProductRequestDto;
+import com.sparta.navershop.models.FolderRepository;
 import com.sparta.navershop.models.Product;
 import com.sparta.navershop.models.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +21,9 @@ import static org.mockito.Mockito.when;
 class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
+
+    @Mock
+    FolderRepository folderRepository;
 
     @Test
     @DisplayName("updateProduct() 에 의해 관심 가격이 3만원으로 변경되는지 확인")
@@ -42,7 +46,7 @@ class ProductServiceTest {
 
         Product product = new Product(requestProductDto, userId);
 
-        ProductService productService = new ProductService(productRepository);
+        ProductService productService = new ProductService(productRepository, folderRepository);
         when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
 
@@ -74,7 +78,7 @@ class ProductServiceTest {
 
         Product product = new Product(requestProductDto, userId);
 
-        ProductService productService = new ProductService(productRepository);
+        ProductService productService = new ProductService(productRepository, folderRepository);
         when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
 
