@@ -2,6 +2,8 @@ package com.sparta.navershop.testdata;
 
 import com.sparta.navershop.dto.ItemDto;
 import com.sparta.navershop.models.*;
+import com.sparta.navershop.repository.ProductRepository;
+import com.sparta.navershop.repository.UserRepository;
 import com.sparta.navershop.service.UserService;
 import com.sparta.navershop.utils.NaverShopSearch;
 import org.springframework.beans.factory.annotation.Autowired;

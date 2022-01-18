@@ -2,7 +2,7 @@ package com.sparta.navershop.service;
 
 import com.sparta.navershop.dto.SignupRequestDto;
 import com.sparta.navershop.models.User;
-import com.sparta.navershop.models.UserRepository;
+import com.sparta.navershop.repository.UserRepository;
 import com.sparta.navershop.models.UserRole;
 import com.sparta.navershop.security.UserDetailsImpl;
 import com.sparta.navershop.security.kakao.KakaoOAuth2;

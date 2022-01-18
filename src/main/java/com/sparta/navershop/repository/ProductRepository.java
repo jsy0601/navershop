@@ -1,5 +1,6 @@
-package com.sparta.navershop.models;
+package com.sparta.navershop.repository;
 
+import com.sparta.navershop.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

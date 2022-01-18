@@ -1,5 +1,7 @@
-package com.sparta.navershop.models;
+package com.sparta.navershop.repository;
 
+import com.sparta.navershop.models.Folder;
+import com.sparta.navershop.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

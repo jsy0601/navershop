@@ -2,9 +2,9 @@ package com.sparta.navershop.service;
 
 import com.sparta.navershop.dto.ProductMypriceRequestDto;
 import com.sparta.navershop.dto.ProductRequestDto;
-import com.sparta.navershop.models.FolderRepository;
+import com.sparta.navershop.repository.FolderRepository;
 import com.sparta.navershop.models.Product;
-import com.sparta.navershop.models.ProductRepository;
+import com.sparta.navershop.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,8 @@
 package com.sparta.navershop.service;
 
 import com.sparta.navershop.models.*;
+import com.sparta.navershop.repository.FolderRepository;
+import com.sparta.navershop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
