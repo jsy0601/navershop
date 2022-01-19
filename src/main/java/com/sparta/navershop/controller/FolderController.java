@@ -1,12 +1,15 @@
 package com.sparta.navershop.controller;
 
 import com.sparta.navershop.dto.FolderCreateRequestDto;
+import com.sparta.navershop.exception.ApiException;
 import com.sparta.navershop.models.Folder;
 import com.sparta.navershop.models.Product;
 import com.sparta.navershop.security.UserDetailsImpl;
 import com.sparta.navershop.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +49,20 @@ public class FolderController {
                                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
         page = page - 1;
         return folderService.getProductsOnFolder(userDetails.getUser(), page, size, sortBy, isAsc, folderId);
+    }
+
+    // 예외처리
+    @ExceptionHandler({ IllegalArgumentException.class })
+    public ResponseEntity<Object> handle(IllegalArgumentException ex) {
+        ApiException apiException = new ApiException(
+                ex.getMessage(),
+                // HTTP 400 -> Client Error
+                HttpStatus.BAD_REQUEST
+        );
+
+        return new ResponseEntity<>(
+                apiException,
+                HttpStatus.BAD_REQUEST
+        );
     }
 }

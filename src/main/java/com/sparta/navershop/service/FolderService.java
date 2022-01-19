@@ -1,5 +1,6 @@
 package com.sparta.navershop.service;
 
+import com.sparta.navershop.exception.ApiRequestException;
 import com.sparta.navershop.models.*;
 import com.sparta.navershop.repository.FolderRepository;
 import com.sparta.navershop.repository.ProductRepository;
@@ -9,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,21 +36,27 @@ public class FolderService {
         return folderRepository.findAllByUser(user);
     }
 
+    @Transactional
     public List<Folder> createFolders(List<String> folderNameList, User user) {
 
-        // 1) 입력으로 들어온 폴더 이름을 기준으로, 회원이 이미 생성한 폴더들을 조회합니다.
-        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNameList);
-
         List<Folder> folderList = new ArrayList<>();
+
         for (String folderName : folderNameList) {
-            // 2) 이미 생성한 폴더가 아닌 경우만 폴더 생성
-            if (!isExistFolderName(folderName, existFolderList)) {
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
+            // 1) DB 에 폴더명이 folderName 인 폴더가 존재하는지?
+            Folder folderInDB = folderRepository.findByName(folderName);
+            if (folderInDB != null) {
+                // DB 에 중복 폴더명 존재한다면 Exception 발생시킴
+                throw new ApiRequestException("중복된 폴더명 ('" + folderName + "') 을 삭제하고 재시도해 주세요!");
             }
+
+            // 2) 폴더를 DB 에 저장
+            Folder folder = new Folder(folderName, user);
+            folder = folderRepository.save(folder);
+
+            // 3) folderList 에 folder Entity 객체를 추가
+            folderList.add(folder);
         }
 
-        folderList = folderRepository.saveAll(folderList);
         return folderList;
     }
 
